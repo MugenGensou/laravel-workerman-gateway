@@ -32,8 +32,11 @@ class BusinessWorkerServer extends Command
         $this->worker->count           = $config['num'];
         $this->worker->registerAddress = "{$registerConfig['listen_ip']}:{$registerConfig['port']}";
 
-        throw_if(!class_exists($config['handler']), HandlerError::class, 'Handler not exists.');
-        throw_if(!in_array(HandlerInterface::class, (new ReflectionClass($config['handler']))->getInterfaceNames()), HandlerError::class, 'Handler must instanceof ' . HandlerInterface::class);
+        if (!class_exists($config['handler']))
+            throw new HandlerError('Handler not exists.');
+
+        if (!in_array(HandlerInterface::class, (new ReflectionClass($config['handler']))->getInterfaceNames()))
+            throw new HandlerError('Handler must instanceof ' . HandlerInterface::class);
 
         $this->worker->eventHandler = $config['handler'];
 

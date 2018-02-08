@@ -11,7 +11,6 @@
     ],
     "require": {
         "php": "^7.0",
-        "laravel/framework": "^5.5",
         "workerman/gateway-worker": "^3.0",
         "workerman/gatewayclient": "^3.0"
     },
